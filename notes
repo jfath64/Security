@@ -1,1 +1,142 @@
 grey host 10.50.41.117
+
+
+
+ctxBvVwnguAb8vx
+
+
+DAY 1 PENETRAION TESTING
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+op-notes
+-techical information
+-your own notes
+-raw jargon
+
+Formalized Reports
+-written for anyone to understand
+-breif higher ups
+
+
+VULNERABILITIES AND EXPLOITATION
+
+
+Initial Access
+-phisihing is the most comman initial access
+
+Phishing 
+-targeting anyone
+
+Spear Phising 
+-targets a group
+
+
+EXPLOIT RESEARCH
+
+Open source
+-multiple sources
+-vet everything
+
+Organizational capabilities
+
+Exploitation
+-more passive 
+-usually assisting a main purpose
+
+Attack
+-like kinetic war 
+
+
+
+TESTING
+Exploit Development occurs from vulnerability pairing and mission-drivens requirement
+
+Test and verify success
+
+Testing provides a number of benefits:
+
+Faster time to breakout of initial foothold
+
+Reduced risk of detection and/or tool failure
+
+Improved recovery times
+
+
+Plan a Procedured
+
+
+
+SCANNING AND RECONAISSANCE
+
+DoD States:
+"produced from publicly available information that is collected, exploited, and disseminated in a timely manner to an appropriate audience for addressing a specific intelligence requirement."
+-cannot do OSINT whenever you want
+-has to fit specific mission scope
+-use legal team to knows laws for collecting in that counrty
+
+NOFORN = sources and methods 
+
+
+Deep Web
+-unlisted web pages like banks accounts 
+
+Dark Web
+-does not use normal web browser
+
+
+
+
+HTML
+
+-view source code 
+
+
+
+
+
+
+
+pip install lxml requests
+
+#!/usr/bin/python
+import lxml.html
+import requests
+
+page = requests.get('http://quotes.toscrape.com')
+tree = lxml.html.fromstring(page.content)
+
+authors = tree.xpath('//small[@class="author"]/text()')
+
+print ('Authors: ',authors)
+
+
+
+
+SCANNING TECHNIQUES
+
+-annotate any creds and ports running ssh
+-annotate on map
+
+nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80,8080,8888,2222,4444
+
+for i in {1..254}; do (ping -c 1 192.168.1.$i | grep "bytes from" &); done
+
+nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=banner.nse
+
+nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=smb-os-discovery.nse
+
+nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=http-enum.nse
+
+
+
+/usr/share/nmap/scripts
+
+
+
+
+
+
+
+
+
