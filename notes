@@ -343,6 +343,68 @@ Selection=2 UNION select id,pass,name from session.user;#
 
 
 
+DAY 4 Reverse Engineering
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+X86_64 Assembly
+
+%rax - first return register
+
+%rbp - base of the stack
+
+%rsp - top of the stack
+
+%rip - instruction pointer
+- points to the memory offset of the next instruction
+
+Heap - dynamicly allocated 
+
+Stack - static stack
+
+JZ - jump if zero
+
+JNZ - jump if not zero
+
+drag exe onto ida
+
+view
+  subviews
+    strings 
+
+(press h on hex to return to decimmal)
+
+(in ida when ebp + var means user input)
+
+GHIDRA
+new project
+
+file
+  import file
+    
+search 
+  for strings
+    (find sting you want an slect it, will lead to assembly)
+    
+you can rename varibles to help keep track of code
+
+param_1 usually user input
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
