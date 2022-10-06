@@ -532,11 +532,147 @@ troubleshooting
 -pick new eip
 
 
+WINDOWS
+
+drag exe in immunity
 
 
+MULTI HANDLER
+
+msfconsole
+
+use multi/handler
+
+https://wiremask.eu/tools/buffer-overflow-pattern-generator/?
+
+https://captmeelo.com/exploitdev/2018/06/27/vulnserver-trun.html
 
 
+Day 7
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+host enumeration
+
+LINUX
+
+last
+-shows last users that were logged on
+
+groups
+-shows groups of current user
+
+
+id 
+-shows uid, gid, gids of groups
+
+ps -auf
+-shows process tree 
+
+pstree
+-shows entire process tree
+
+sudo lsof 
+-shows open files on system
+
+ps -p 1
+-finds linux systemd or sysv
+
+systemctl list-units --type service
+-list services on systemd systems
+
+
+arp -an
+-shows arp cache
+
+ip route
+-shows routing table
+
+netstat -r
+-routing table
+
+
+cat /proc/cpuinfo
+-shows cpu info
+
+lsmod 
+-kernel modules
+
+
+Windows
+
+net user
+-shows users on box
+
+get-localuser
+-shows accounts and which are disabled
+
+get-localgroup
+-shows groups and description
+
+
+get-localuser | get-member
+-shows object methods
+
+tasklist /v
+-shows running processes
+
+get-process
+
+get-process | where-object {$_.ID -lt '1000'}
+-pid less that 1000
+
+tasklist /svc
+-services
+
+net start
+-started services
+
+get-service | where {$_.status -eq "running"}
+-running services
+
+ip config /all
+-nic info
+
+netstat -anob
+-network info with pids
+
+arp -a 
+-arp cache
+
+route print 
+-routing table
+
+systeminfo 
+-OS, Hostname, ...etc
+
+
+SSH Multiplexing
+
+ssh -M -S ~/.ssh/cm/gray student@10.50.41.117
+-creates an ssh master socket to greyhost
+
+ssh -S ~/.ssh/cm/gray grayhost
+-connect to master socket
+
+ ssh -M -S ~/.ssh/cm/gray -o "ControlPersist=10m" student@10.50.41.117
+ -creates a connection that lasts 10m
+ 
+ ssh -O forward -L 1111:10.100.28.48:80 -S ~/.ssh/cm/gray nla
+ -creates a port forward to box
+ -replace forward with cancel to close connection
+ 
+ssh -O cancel -S ~/.ssh/cm/gray nla
+-graceful shutdown
+-exit to focefully shutdown everything
+
+ssh -O forward  -S ~/.ssh/cm/gray placeholda -L 2222:192.168.28.111:2222
+-make forward to .111
+
+ssh -M -S ~/.ssh/cm/T1 comrade@0.0.0.0 -p 2222
+-create another master socket off the first one
+
+scp -o "ControlPath=~/.ssh/cm/gray": placeholder:/home/student/func
+-scp using multiplex
 
 
 
